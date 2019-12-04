@@ -20,8 +20,18 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private FailureHandler failureHandler;
+    @Autowired
+    private LogoutSuccHandler logoutSuccHandler;
+    @Autowired
+    private AuthDeniedHandler authDeniedHandler;
+    //@Autowired
+    //private ObjectPostProsser objectPostProsser;
     @Autowired
     private HrService hrService;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(hrService).passwordEncoder(new BCryptPasswordEncoder());
@@ -29,11 +39,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/index.html","/static/**", "/system");
+        web.ignoring().antMatchers("/index.html", "/static/**", "/system");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
+        http.authorizeRequests().withObjectPostProcessor(new ObjectPostProsser())
+                .and().formLogin().loginPage("/login_p").loginProcessingUrl("/login")
+                .usernameParameter("username").passwordParameter("password")
+                .failureHandler(failureHandler).permitAll()
+                .and().logout().logoutUrl("/logout")
+                .logoutSuccessHandler(logoutSuccHandler)
+                .permitAll().and().csrf().disable()
+                // 拒绝访问处理
+                .exceptionHandling().accessDeniedHandler(authDeniedHandler);
     }
 }
