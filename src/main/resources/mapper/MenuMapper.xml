@@ -14,18 +14,36 @@
     <result column="require_auth" jdbcType="BOOLEAN" property="requireAuth" />
     <result column="parent_id" jdbcType="INTEGER" property="parentId" />
     <result column="enabled" jdbcType="BOOLEAN" property="enabled" />
+    <collection property="roles" ofType="com.pg.vhrpg.entity.Role">
+      <id column="id" property="id" />
+      <result column="name" property="name" />
+      <result column="name_zh" property="nameZh" />
+    </collection>
+    <collection property="children" ofType="com.pg.vhrpg.entity.Menu">
+      <id column="id2" property="id"/>
+      <result column="path2" property="path" jdbcType="VARCHAR"/>
+      <result column="component2" property="component" jdbcType="VARCHAR"/>
+      <result column="name2" property="name" jdbcType="VARCHAR"/>
+      <result column="iconCls2" property="iconCls" jdbcType="VARCHAR"/>
+      <result column="keep_alive2" jdbcType="BOOLEAN" property="keepAlive" />
+      <result column="require_auth2" jdbcType="BOOLEAN" property="requireAuth" />
+      <collection property="children" ofType="com.pg.vhrpg.entity.Menu">
+        <id column="id3" property="id"/>
+        <result column="name3" property="name" jdbcType="VARCHAR"/>
+      </collection>
+    </collection>
   </resultMap>
-  <resultMap id="menuRoleMap" type="com.pg.vhrpg.entity.Menu">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="url" jdbcType="VARCHAR" property="url" />
-    <result column="path" jdbcType="VARCHAR" property="path" />
-    <result column="component" jdbcType="VARCHAR" property="component" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="icon_cls" jdbcType="VARCHAR" property="iconCls" />
-    <result column="keep_alive" jdbcType="BOOLEAN" property="keepAlive" />
-    <result column="require_auth" jdbcType="BOOLEAN" property="requireAuth" />
-    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
-    <result column="enabled" jdbcType="BOOLEAN" property="enabled" />
+  <resultMap id="menuRoleMap" type="com.pg.vhrpg.entity.Menu" extends="BaseResultMap">
+<!--    <id column="id" jdbcType="INTEGER" property="id" />-->
+<!--    <result column="url" jdbcType="VARCHAR" property="url" />-->
+<!--    <result column="path" jdbcType="VARCHAR" property="path" />-->
+<!--    <result column="component" jdbcType="VARCHAR" property="component" />-->
+<!--    <result column="name" jdbcType="VARCHAR" property="name" />-->
+<!--    <result column="icon_cls" jdbcType="VARCHAR" property="iconCls" />-->
+<!--    <result column="keep_alive" jdbcType="BOOLEAN" property="keepAlive" />-->
+<!--    <result column="require_auth" jdbcType="BOOLEAN" property="requireAuth" />-->
+<!--    <result column="parent_id" jdbcType="INTEGER" property="parentId" />-->
+<!--    <result column="enabled" jdbcType="BOOLEAN" property="enabled" />-->
     <collection property="roles" ofType="com.pg.vhrpg.entity.Role">
       <id column="id" jdbcType="INTEGER" property="id" />
       <result column="name" jdbcType="VARCHAR" property="name" />
@@ -172,5 +190,8 @@
   </update>
   <select id="findAllMenu" resultMap="menuRoleMap">
     select m.*, r.* from menu m left join menu_role mr on m.id = mr.menu_id join role r on mr.role_id = r.id
+  </select>
+  <select id="getMenusByHrId" parameterType="Long" resultMap="BaseResultMap">
+    select m1.`id`,m1.`path`,m1.`component`,m1.`iconCls`,m1.`name`,m1.`requireAuth`,m2.`component` as component2,m2.`iconCls` as iconCls2,m2.`keepAlive` as keepAlive2,m2.`name` as name2,m2.`path` as path2,m2.`requireAuth` as requireAuth2 from menu m1,menu m2 where m1.`id`=m2.`parentId` and m1.`id`!=1 and m2.`id` in(select mr.`mid` from hr_role h_r,menu_role mr where h_r.`role_id`=mr.`rid` and h_r.`hr_id`=#{hrId}) and m2.`enabled`=true order by m1.`id`,m2.`id`
   </select>
 </mapper>

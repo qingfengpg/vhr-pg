@@ -1,5 +1,6 @@
 package com.pg.vhrpg.service;
 
+import com.pg.vhrpg.common.HrUtil;
 import com.pg.vhrpg.entity.Menu;
 import com.pg.vhrpg.mapper.MenuMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,10 @@ public class MenuService {
 
     public List<Menu> findAllMenu() {
         return menuMapper.findAllMenu();
+    }
+
+    public List<Menu> getMenusByHrId() {
+      return   menuMapper.getMenusByHrId(HrUtil.getCurrentHr().getId());
     }
 
 }

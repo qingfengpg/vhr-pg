@@ -7,7 +7,13 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+/**
+ *功能描述: 菜单实体
+ * @author: pg
+ * @date: 2019/12/4 22:04
+ * @param:
+ * @return:
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -34,6 +40,6 @@ public class Menu implements Serializable {
 
     private List<Role> roles = new ArrayList<Role>();
 
-    private List<Menu> menus = new ArrayList<Menu>();
+    private List<Menu> children = new ArrayList<Menu>();
     private static final long serialVersionUID = 1L;
 }
