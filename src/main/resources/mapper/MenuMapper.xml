@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pg.vhrpg.mapper.MenuMapper">
+  <resultMap id="BaseResultMap" type="com.pg.vhrpg.entity.Menu">
+    <!--@mbg.generated-->
+    <!--@Table menu-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="path" jdbcType="VARCHAR" property="path" />
+    <result column="component" jdbcType="VARCHAR" property="component" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="icon_cls" jdbcType="VARCHAR" property="iconCls" />
+    <result column="keep_alive" jdbcType="BOOLEAN" property="keepAlive" />
+    <result column="require_auth" jdbcType="BOOLEAN" property="requireAuth" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="enabled" jdbcType="BOOLEAN" property="enabled" />
+  </resultMap>
+  <resultMap id="menuRoleMap" type="com.pg.vhrpg.entity.Menu">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="path" jdbcType="VARCHAR" property="path" />
+    <result column="component" jdbcType="VARCHAR" property="component" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="icon_cls" jdbcType="VARCHAR" property="iconCls" />
+    <result column="keep_alive" jdbcType="BOOLEAN" property="keepAlive" />
+    <result column="require_auth" jdbcType="BOOLEAN" property="requireAuth" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="enabled" jdbcType="BOOLEAN" property="enabled" />
+    <collection property="roles" ofType="com.pg.vhrpg.entity.Role">
+      <id column="id" jdbcType="INTEGER" property="id" />
+      <result column="name" jdbcType="VARCHAR" property="name" />
+      <result column="name_zh" jdbcType="VARCHAR" property="nameZh" />
+    </collection>
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, url, `path`, component, `name`, icon_cls, keep_alive, require_auth, parent_id,
+    enabled
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from menu
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from menu
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.pg.vhrpg.entity.Menu" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into menu (url, `path`, component, 
+      `name`, iconCls, keep_alive, 
+      require_auth, parent_id, enabled
+      )
+    values (#{url,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, #{component,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{iconCls,jdbcType=VARCHAR}, #{keepAlive,jdbcType=BOOLEAN}, 
+      #{requireAuth,jdbcType=BOOLEAN}, #{parentId,jdbcType=INTEGER}, #{enabled,jdbcType=BOOLEAN}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.pg.vhrpg.entity.Menu" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into menu
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="url != null">
+        url,
+      </if>
+      <if test="path != null">
+        `path`,
+      </if>
+      <if test="component != null">
+        component,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="iconCls != null">
+        iconCls,
+      </if>
+      <if test="keepAlive != null">
+        keep_alive,
+      </if>
+      <if test="requireAuth != null">
+        require_auth,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="enabled != null">
+        enabled,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null">
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="component != null">
+        #{component,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="iconCls != null">
+        #{iconCls,jdbcType=VARCHAR},
+      </if>
+      <if test="keepAlive != null">
+        #{keepAlive,jdbcType=BOOLEAN},
+      </if>
+      <if test="requireAuth != null">
+        #{requireAuth,jdbcType=BOOLEAN},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="enabled != null">
+        #{enabled,jdbcType=BOOLEAN},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pg.vhrpg.entity.Menu">
+    <!--@mbg.generated-->
+    update menu
+    <set>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null">
+        `path` = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="component != null">
+        component = #{component,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="iconCls != null">
+        iconCls = #{iconCls,jdbcType=VARCHAR},
+      </if>
+      <if test="keepAlive != null">
+        keep_alive = #{keepAlive,jdbcType=BOOLEAN},
+      </if>
+      <if test="requireAuth != null">
+        require_auth = #{requireAuth,jdbcType=BOOLEAN},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="enabled != null">
+        enabled = #{enabled,jdbcType=BOOLEAN},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pg.vhrpg.entity.Menu">
+    <!--@mbg.generated-->
+    update menu
+    set url = #{url,jdbcType=VARCHAR},
+      `path` = #{path,jdbcType=VARCHAR},
+      component = #{component,jdbcType=VARCHAR},
+      `name` = #{name,jdbcType=VARCHAR},
+      iconCls = #{iconCls,jdbcType=VARCHAR},
+      keep_alive = #{keepAlive,jdbcType=BOOLEAN},
+      require_auth = #{requireAuth,jdbcType=BOOLEAN},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      enabled = #{enabled,jdbcType=BOOLEAN}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="findAllMenu" resultMap="menuRoleMap">
+    select m.*, r.* from menu m left join menu_role mr on m.id = mr.menu_id join role r on mr.role_id = r.id
+  </select>
+</mapper>

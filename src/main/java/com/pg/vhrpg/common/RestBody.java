@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * @ClassName: RestBody
- * @Description:
+ * @Description: 统一返回
  * @Author: pg
  * @Date: 2019/12/3 16:26
  * @Version: 1.0

@@ -27,7 +27,11 @@ public class HrService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        return null;
+    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+        Hr hr = hrMapper.loadHrByUserName(userName);
+        if (hr == null) {
+            throw new UsernameNotFoundException("用户名错误！");
+        }
+        return hr;
     }
 }

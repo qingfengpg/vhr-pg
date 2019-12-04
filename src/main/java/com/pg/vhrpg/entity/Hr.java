@@ -27,7 +27,7 @@ public class Hr implements Serializable, UserDetails {
     private String telephone;
     private String address;
     private boolean enabled;
-    private String username;
+    private String userName;
     private String password;
     private String remark;
     private List<Role> roles;
@@ -38,7 +38,7 @@ public class Hr implements Serializable, UserDetails {
     }
     @Override
     public String getUsername() {
-        return username;
+        return userName;
     }
     @JsonIgnore
     @Override
@@ -131,8 +131,8 @@ public class Hr implements Serializable, UserDetails {
     }
 
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsername(String userName) {
+        this.userName = userName;
     }
 
     public void setPassword(String password) {
