@@ -12,8 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 
-import javax.annotation.Resource;
-
 /**
  * @ClassName: WebSecurityConfig
  * @Description:
@@ -47,7 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/index.html", "/static/**", "/login_p", "/favicon.ico", "/system");
+        web.ignoring().antMatchers("/index.html", "/static.static/**", "/login_p", "/favicon.ico", "/system");
     }
 
     @Override

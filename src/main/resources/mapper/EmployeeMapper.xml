@@ -40,4 +40,10 @@
     specialty, school, begin_date, work_state, work_id, contract_term, conversion_time, 
     not_work_date, begin_contract, end_contract, work_age
   </sql>
+    <select id="list" resultMap="BaseResultMap">
+      select * from employee
+      <if test="start!=null and size!=null ">
+        limit #{start},#{size}
+      </if>
+    </select>
 </mapper>

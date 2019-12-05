@@ -23,7 +23,7 @@ import java.io.PrintWriter;
 public class LogoutSuccHandler implements LogoutSuccessHandler {
     @Override
     public void onLogoutSuccess(HttpServletRequest req, HttpServletResponse res, Authentication auth) throws IOException, ServletException {
-        res.setContentType("application/json;charset=uft-8");
+        res.setContentType("application/json;charset=utf-8");
         RestBody restBody = RestBody.ok("注销成功!");
         ObjectMapper objectMapper = new ObjectMapper();
         PrintWriter pw = res.getWriter();
